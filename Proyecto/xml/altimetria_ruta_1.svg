@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="2.0">
+	<polyline points="20,220 35,215 65,225 90,222 122,218 157,216 " style="fill:white;stroke:blue;stroke-width:1"/>
+	<text x="20" y="230" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Ruta del Patrimonio de Noreña
+	</text>
+	<text x="35" y="230" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Capilla del Ecce Homo
+	</text>
+	<text x="65" y="230" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Parque de los Riegos
+	</text>
+	<text x="90" y="230" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Casa Consistorial
+	</text>
+	<text x="122" y="230" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Parque de la Iglesia
+	</text>
+	<text x="157" y="230" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Fuente de los Cuatro Caños
+	</text>
+</svg>

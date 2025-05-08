@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="2.0">
+	<polyline points="20,216 47,210 148,190 282,195 455,213 679,216 " style="fill:white;stroke:blue;stroke-width:1"/>
+	<text x="20" y="226" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Ruta de Santa Marina a Argüelles
+	</text>
+	<text x="47" y="226" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Capilla de Santa Ana
+	</text>
+	<text x="148" y="226" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Mirador de Santa Marina
+	</text>
+	<text x="282" y="226" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Roble centenario de Argüelles
+	</text>
+	<text x="455" y="226" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Área recreativa La Teyera
+	</text>
+	<text x="679" y="226" style="writing-mode: tb; glyph-orientation-vertical: 0;">
+		Centro de Noreña
+	</text>
+</svg>
