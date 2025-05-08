@@ -122,7 +122,7 @@ class Rutas {
     processKML(){   
         var section = $("<section></section>");
         section.append("<h3>Procesado de KML</h3>");
-        var label = $("<p><label for='xmlFile'>Cargar archivos kml</label></p>");
+        var label = $("<p><label for='kmlFile'>Cargar archivos kml</label></p>");
         section.append(label);
 
         var input = $("<p><input type='file' id='kmlFile' accept='.kml'></p>");
