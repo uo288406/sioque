@@ -85,7 +85,7 @@
             </hito>
         </hitos>
         <planimetria>ruta1.kml</planimetria>
-        <altimetria>ruta1.svg</altimetria>
+        <altimetria>altimetria_ruta_1.svg</altimetria>
     </ruta>    
     <ruta nombreRuta="Ruta de los Caminos Rurales de La Carrera y Hevia" fechaInicio="2025-07-10" horaInicio="09:30:00">
         <tipo>Paisajística</tipo>
@@ -170,7 +170,7 @@
             </hito>
         </hitos>
         <planimetria>ruta2.kml</planimetria>
-        <altimetria>ruta2.svg</altimetria>
+        <altimetria>altimetria_ruta_2.svg</altimetria>
     </ruta>    
     <ruta nombreRuta="Ruta de Santa Marina a Argüelles" fechaInicio="2025-08-02" horaInicio="10:00:00">
         <tipo>Paisajística</tipo>
@@ -182,8 +182,8 @@
         <lugarInicio>Plaza del Ayuntamiento de Noreña</lugarInicio>
         <direccionInicio>Calle Constitución, Noreña</direccionInicio>
         <coordenadasInicio> 
-            <longitud>-5.6901</longitud> 
-            <latitud>43.3905</latitud>
+            <longitud>-5.6949</longitud> 
+            <latitud>43.3835</latitud>
             <altitud>284</altitud>
         </coordenadasInicio>
         <referencias>
@@ -197,7 +197,7 @@
                 <nombreHito>Capilla de Santa Ana</nombreHito>
                 <descripcionHito>Pequeña capilla rural del siglo XIX con vistas a los prados.</descripcionHito>
                 <coordenadasHito>
-                    <longitud>-5.6847</longitud>                  
+                    <longitud>-5.6950</longitud>                  
                     <latitud>43.3888</latitud>
                     <altitud>290</altitud>
                 </coordenadasHito> 
@@ -209,8 +209,8 @@
                 <nombreHito>Mirador de Santa Marina</nombreHito>
                 <descripcionHito>Pequeño alto con vistas panorámicas al Naranco y Cordillera Cantábrica.</descripcionHito>
                 <coordenadasHito>
-                    <longitud>-5.6780</longitud>                    
-                    <latitud>43.3833</latitud>
+                    <longitud>-5.6828</longitud>                    
+                    <latitud>43.3902</latitud>
                     <altitud>310</altitud>
                 </coordenadasHito> 
                 <galeriaFotosHito>
@@ -233,8 +233,8 @@
                 <nombreHito>Área recreativa La Teyera</nombreHito>
                 <descripcionHito>Zona de descanso con mesas, juegos y arboleda.</descripcionHito>
                 <coordenadasHito>
-                    <longitud>-5.6875</longitud>                    
-                    <latitud>43.3831</latitud>
+                    <longitud>-5.6836</longitud>                    
+                    <latitud>43.3850</latitud>
                     <altitud>287</altitud> 
                 </coordenadasHito> 
                 <galeriaFotosHito>
@@ -245,8 +245,8 @@
                 <nombreHito>Centro de Noreña</nombreHito>
                 <descripcionHito>Regreso al centro histórico con bares, tiendas y sidrerías.</descripcionHito>
                 <coordenadasHito>
-                    <longitud>-5.6901</longitud>                    
-                    <latitud>43.3905</latitud>
+                    <longitud>-5.6885</longitud>                    
+                    <latitud>43.3784</latitud>
                     <altitud>284</altitud> 
                 </coordenadasHito> 
                 <galeriaFotosHito>
@@ -255,6 +255,6 @@
             </hito>
         </hitos>
         <planimetria>ruta3.kml</planimetria>
-        <altimetria>ruta3.svg</altimetria>
+        <altimetria>altimetria_ruta_3.svg</altimetria>
     </ruta>
 </rutas>

@@ -22,7 +22,7 @@
 <!ELEMENT coordenadasHito (longitud, latitud, altitud)>
 <!ELEMENT galeriaFotosHito (foto+)>
 <!ELEMENT foto (#PCDATA)>
-<!ELEMENT galeriaVideosHito (video*)>
+<!ELEMENT galeriaVideosHito (video?, video?, video?)>
 <!ELEMENT video (#PCDATA)>
 <!ELEMENT planimetria (#PCDATA)>
 <!ELEMENT altimetria (#PCDATA)>

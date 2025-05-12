@@ -21,9 +21,6 @@ def coordenadas(archivoXML):
 
     footer_kml = "</Document>\n</kml>"
 
-    ##kml = ""
-    ##kml += header_kml
-
     nRuta = 1
 
     for ruta in raiz.findall('.//' + ns + 'ruta'):
@@ -57,12 +54,6 @@ def coordenadas(archivoXML):
         rutasKml.write(kml)
         rutasKml.close()
         nRuta += 1
-
-    ##kml += footer_kml
-
-    ##with open("rutas.kml", "w") as archivo_salida:
-        ##archivo_salida.write(kml)
-    ##print("Archivo KML generado: rutas.kml")
 
 
 def crearMarcador(nombre, descripcion, latitud, longitud, altitud):

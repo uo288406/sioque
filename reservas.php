@@ -107,14 +107,20 @@
 				
 					foreach ($recursos as $recurso) {
 						echo "<li>";
-						echo "<input type='radio' name='recurso_id' value='" . $recurso['id'] . "' required> ";
+						echo "<input type='checkbox' name='recurso_id[]' value='" . $recurso['id'] . "'>";
 						echo $recurso['descripcion'] .".";
 				
 						echo " Tipo: ". $recurso['tipo'] .".";
+
+						$inicio = new DateTime($recurso['fecha_inicio'] . ' ' . $recurso['hora_inicio']);
+						$fin = new DateTime($recurso['fecha_fin'] . ' ' . $recurso['hora_fin']);
+						$duracion = $inicio->diff($fin);
 				
 						echo " Fecha y Hora de Inicio: " . $recurso['fecha_inicio'] . " " . $recurso['hora_inicio'] .".";
 						echo " Fecha y Hora de Finalización: " . $recurso['fecha_fin'] . " " . $recurso['hora_fin'] .".";
 				
+						echo " Duración: " . $duracion->format('%h horas %i minutos') . ".";
+
 						echo " Número de plazas: " . $recurso['limite_ocupacion'] .".";
 		
 						echo " Precio: " . $recurso['precio'] .".";
@@ -123,7 +129,7 @@
 					}
 				
 					echo "</ul>"; 
-					echo "<input type='submit' name='reservar' value='Reservar Recurso'>";
+					echo "<input type='submit' name='reservar' value='Reservar'>";
 					echo "</form>";
 				}				
 
@@ -138,12 +144,12 @@
 					$res = $conn->query($sql);
 					$precio = $res->fetch_assoc()['precio'];
 			
-					$stmt2 = $conn->prepare("INSERT INTO presupuestos (reserva_id, total) VALUES (?, ?)");
-					$stmt2->bind_param("id", $reserva_id, $precio);
-					$stmt2->execute();
-			
 					$conn->close();
-					return $reserva_id;
+
+					return [
+						'reserva_id' => $reserva_id,
+						'precio' => $precio
+					];
 				}
 
 				public function mostrarReservasUsuario($usuario_id){				
@@ -183,6 +189,13 @@
 					return $reservas;
 				}
 				
+				public function crearPresupuesto($reserva_id, $total) {
+					$conn = $this->getConnection();
+					$stmt = $conn->prepare("INSERT INTO presupuestos (reserva_id, total) VALUES (?, ?)");
+					$stmt->bind_param("id", $reserva_id, $total);
+					$stmt->execute();
+					$conn->close();
+				}
 			
 				public function anularReserva($reserva_id){
 					$conn = $this->getConnection();
@@ -191,6 +204,7 @@
 					$conn->close();
 					return $res;
 				}
+				
 			}
 
 			$reservas = new Reservas();
@@ -201,22 +215,36 @@
 			$reservas->mostrarRecursos();
 
 			if (isset($_POST["reservar"])) {
-				if (isset($_SESSION["usuario_id"])) {
-					$reserva_id = $reservas->hacerReserva($_SESSION["usuario_id"], $_POST["recurso_id"]);
-					echo "<p>Reserva realizada. Presupuesto generado.</p>";
-				} else {
-					echo "<p>Debes estar registrado para reservar.</p>";
-				}
-			}
+                if (isset($_SESSION["usuario_id"])) {
+					$ids = $_POST["recurso_id"]; 
+					$total = 0;
+			
+					foreach ($ids as $id) {
+						$reserva_id = $reservas->hacerReserva($_SESSION["usuario_id"], $id);		
+						$total += $reserva_id['precio'];  
+						$reservas->crearPresupuesto($reserva_id, $reserva_id['precio']);
+					}
 
-			$reservas->mostrarReservasUsuario($_SESSION["usuario_id"]);
+					
+                    echo "<p>Reserva realizada. Presupuesto total: $total.</p>";
+                } else {
+                    echo "<p>Debes estar registrado para reservar.</p>";
+                }
+            }		
+			
+			if (isset($_SESSION["usuario_id"])) {
+				$reservas->mostrarReservasUsuario($_SESSION["usuario_id"]);
+			} else {
+				echo "<p>Debes estar registrado para ver tus reservas.</p>";
+			}
+			
 
 			if (isset($_POST["anular"])) {
 				if (isset($_SESSION["usuario_id"])) {
 					$reserva_id = $_POST["reserva_id"]; 
 			
 					if ($reservas->anularReserva($reserva_id)) {
-						
+						echo "<p>Reserva anulada correctamente.</p>";
 					} else {
 						echo "<p>Error al anular la reserva.</p>";
 					}

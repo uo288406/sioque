@@ -1,8 +1,6 @@
 class Rutas {
     constructor(){
         this.processXML();
-        this.processKML();
-        this.processSVG();
     }
 
     processXML(){    
@@ -97,8 +95,7 @@ class Rutas {
                         const descHitoElement = $('<p></p>').text(`${descHito}`);
                         const coordenadasHitoElement = $('<p></p>').text(`Coordenadas: ${latitud}, ${longitud} - ${altitud} m`);
                         
-                        const hitoPhoto = $(this).find('galeriaFotosHito > foto').text();
-                        console.log(hitoPhoto);
+                        const hitoPhoto = $(this).find('galeriaFotosHito > foto').text();          
                         const imgHito = $('<img/>');
                         imgHito.attr("src", "multimedia/imagenes/" + hitoPhoto);
                         imgHito.attr("alt", descHito);
@@ -110,6 +107,58 @@ class Rutas {
                     });
 
                     thisBefore.append(article);
+
+                    const ficheroKML = "xml/" + $(this).find('planimetria').text();
+                    const mapId = `kmlMap-${index}`;
+
+                    const kmlSection = $("<section></section>");
+                    kmlSection.append($("<h3>Mapa con los datos del KML</h3>"));
+                    kmlSection.attr("id", mapId);
+                    article.append(kmlSection);
+
+                    L.mapbox.accessToken = 'pk.eyJ1IjoidW8yODg0MDYiLCJhIjoiY200MDZjamNuMjU2MDJycXpsOGFtMmQ4ayJ9.pLQtA7PIIhpqgQuNGCzcMA';
+
+                    var map = L.mapbox.map(mapId)
+                                      .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v12'))
+                                      .setView([43.3938, -5.7078], 8);
+                    
+                    omnivore.kml(ficheroKML)
+                    .on('ready', function () {
+                        this.addTo(map);
+                        map.fitBounds(this.getBounds());
+
+                        var points = this.getLayers().map(function (layer) {
+                            return layer.getLatLng(); 
+                        });
+                
+                        var polyline = L.polyline(points, { color: 'red' });
+                        polyline.addTo(map); 
+                    })
+                    .on('error', function(e) {
+                        console.error("Error al cargar KML:", e.error);
+                        kmlSection.append("<p>No se pudo cargar el archivo KML.</p>");
+                    });
+                    
+                    const ficheroSVG = $(this).find('altimetria').text();
+
+                    const svgSection = $("<section></section>");
+                    svgSection.append("<h3>Gráfico de altimetría</h3>");
+                    article.append(svgSection);
+
+                    fetch("xml/" + ficheroSVG)
+                        .then(response => {
+                            if (!response.ok) throw new Error("No se pudo cargar el SVG");
+                            return response.text();
+                        })
+                        .then(svgContent => {
+                            const svg = $($.parseXML(svgContent)).find("svg");
+                            svg.attr("version", "1.1");
+                            svgSection.append(svg);
+                        })
+                        .catch(err => {
+                            console.error("Error al cargar el SVG:", err);
+                            svgSection.append("<p>No se pudo cargar el gráfico SVG.</p>");
+                        });
                 });
             }
             reader.readAsText(xmlFile);
@@ -119,85 +168,4 @@ class Rutas {
         }       
     }
 
-    processKML(){   
-        var section = $("<section></section>");
-        section.append("<h3>Procesado de KML</h3>");
-        var label = $("<p><label for='kmlFile'>Cargar archivos kml</label></p>");
-        section.append(label);
-
-        var input = $("<p><input type='file' id='kmlFile' accept='.kml'></p>");
-        input.on('change', this.createKML.bind(section));
-        section.append(input);
-
-        $("main").append(section);
-    }
-
-    createKML(e){
-        var file = e.target.files[0];
-
-        $(this).find("section").remove();
-        var section = $("<section></section>");
-    
-        section.append($("<h3>Mapa con los datos del kml</h3>"));
-        
-        /* el uso de id es requerido por el mapa dinamico */
-        section.attr("id", "kmlMap");
-        section.appendTo(this);
-
-        L.mapbox.accessToken = 'pk.eyJ1IjoidW8yODg0MDYiLCJhIjoiY200MDZjamNuMjU2MDJycXpsOGFtMmQ4ayJ9.pLQtA7PIIhpqgQuNGCzcMA';
-
-        var map = L.mapbox.map('kmlMap')
-                          .addLayer(L.mapbox.styleLayer('mapbox://styles/mapbox/streets-v12'))
-                          .setView([43.3938, -5.7078], 8);
-
-        
-        if (file.name.endsWith('.kml')) {
-        var reader = new FileReader();
-        reader.onload = function (event) {
-            var kmlString = event.target.result;
-            var layer = omnivore.kml.parse(kmlString);
-            layer.addTo(map); //add marker
-            
-            var points = layer.getLayers().map(function (marker) {
-                return marker.getLatLng(); //marker TO coords
-            });
-    
-            var polyline = L.polyline(points, { color: 'red' });
-            polyline.addTo(map); //connect
-        }
-            reader.readAsText(file);
-        }else {
-            alert("Error: Archivo no válido " + file.name);
-        }     
-
-    }
-
-    processSVG(){
-        var section = $("<section></section>");
-        section.append("<h3>Procesado de SVG</h3>");
-        var label = $("<p><label for='svgFile'>Procesar svg</label></p>");
-        section.append(label);
-
-        var input = $("<p><input type='file' id='svgFile' accept='.svg'></p>");
-        input.on('change', this.createSVG.bind(section));
-        section.append(input);
-
-        $("main").append(section);
-    }
-
-    createSVG(e){
-        var file = e.target.files[0];
-
-        var reader = new FileReader();
-        var thisBefore = this;
-
-        reader.onload = function(event){
-            var content = event.target.result;
-            var svg = $($.parseXML(content)).find("svg");
-            svg.attr("version", "1.1");
-            thisBefore.append(svg);
-        }
-
-        reader.readAsText(file); 
-    }
 }

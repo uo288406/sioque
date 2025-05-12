@@ -37,10 +37,6 @@ nav {
         margin-right: 2em;
     }
 
-    /* MAIN:nth-child - Especificidad: 0, 1, 2 */
-    main:nth-of-type(1) p {
-        display: none;
-    }
 }
 
 @media (max-width: 799px){

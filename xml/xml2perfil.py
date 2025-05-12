@@ -52,7 +52,6 @@ def coordenadas_por_ruta(archivoXML):
         svg += "\" style=\"fill:white;stroke:blue;stroke-width:1\"/>\n"
         svg += text + footer_svg
 
-        # Guarda SVG individual
         with open(f"altimetria_ruta_{num_ruta}.svg", "w", encoding="utf-8") as archivo_salida:
             archivo_salida.write(svg)
         print(f"Archivo generado: altimetria_ruta_{num_ruta}.svg")
